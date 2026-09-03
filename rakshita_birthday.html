@@ -499,6 +499,22 @@
     *{ animation:none !important; transition:none !important; }
   }
 
+  @media (max-width: 560px){
+    .hero{ padding:5vh 5vw 6vh; }
+    .hero .polaroid{ width:min(72vw, 270px); padding:12px 12px 38px; }
+    .subtitle{ font-size:0.96rem; }
+    .slide-nav{ width:34px; height:34px; font-size:1.1rem; }
+    .ticket{ display:block; }
+    .ticket-main{ border-right:none; border-bottom:2px dashed var(--paper-dark); }
+    .ticket-stub{ width:100%; min-height:56px; }
+    .ticket-stub span{ writing-mode:horizontal-tb; letter-spacing:0.15em; }
+    .countdown{ gap:0.45rem; }
+    .countdown .lab{ letter-spacing:0.05em; }
+    .music-btn{ width:54px; height:54px; bottom:16px; right:16px; }
+    .balloon{ width:34px; height:44px; }
+    .balloon::after{ bottom:-28px; height:28px; }
+  }
+
   /* ---------- AMBIENT PETALS ---------- */
   .ambient-layer{
     position:fixed;
@@ -1014,61 +1030,6 @@
   }
   if(!reduceMotion){
     setInterval(spawnPetal, 900);
-    // Try autoplay + one-time celebration on load; if blocked show an overlay to get a user gesture.
-    let celebrated = false;
-    function celebrateOnce(){
-      if(celebrated) return;
-      celebrated = true;
-      celebrate();
-    }
-
-    function showAutoplayOverlay(){
-      const ov = document.createElement('div');
-      ov.id = 'autoplayOverlay';
-      ov.style.position = 'fixed';
-      ov.style.inset = '0';
-      ov.style.display = 'flex';
-      ov.style.alignItems = 'center';
-      ov.style.justifyContent = 'center';
-      ov.style.background = 'rgba(0,0,0,0.45)';
-      ov.style.zIndex = 2000;
-      const card = document.createElement('div');
-      card.style.background = 'var(--paper)';
-      card.style.padding = '28px';
-      card.style.borderRadius = '12px';
-      card.style.textAlign = 'center';
-      card.style.boxShadow = '0 12px 30px rgba(0,0,0,0.4)';
-      const msg = document.createElement('div');
-      msg.textContent = 'Click to start the birthday celebration';
-      msg.style.marginBottom = '12px';
-      const btn = document.createElement('button');
-      btn.textContent = 'Start celebration';
-      btn.style.padding = '10px 16px';
-      btn.style.borderRadius = '8px';
-      btn.style.border = 'none';
-      btn.style.cursor = 'pointer';
-      btn.addEventListener('click', ()=>{
-        birthdayAudio.play().then(()=> setPlayingUI(true)).catch(()=>{});
-        celebrateOnce();
-        ov.remove();
-      });
-      card.appendChild(msg);
-      card.appendChild(btn);
-      ov.appendChild(card);
-      document.body.appendChild(ov);
-    }
-
-    // Attempt the autoplay and celebration shortly after load.
-    setTimeout(()=>{
-      birthdayAudio.play().then(()=>{
-        setPlayingUI(true);
-        celebrateOnce();
-      }).catch(()=>{
-        // Autoplay blocked — show overlay to get a gesture and also attach a one-time body click
-        showAutoplayOverlay();
-        document.body.addEventListener('click', ()=>{ birthdayAudio.play().then(()=> setPlayingUI(true)).catch(()=>{}); celebrateOnce(); }, {once:true});
-      });
-    }, 350);
   }
 
   // ---------- Cake: blow out candles ----------
