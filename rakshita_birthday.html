@@ -785,11 +785,9 @@
   // ---------- Birthday tune (Web Audio, no file needed) ----------
   // ---------- Birthday tune (use a local MP3 file) ----------
   const musicBtn = document.getElementById('musicBtn');
-  // Use the provided MP3. Relative path from this file (BR/) to the Desktop file:
-  // ../RHB(256k).mp3
-  // Use the MP3 located in the same `BR` folder as this HTML file.
-  // Encode parentheses so the URL is reliable on GitHub Pages and other static hosts.
-  const audioPath = encodeURI('RHB(256k).mp3');
+  // Use the MP3 in the same folder as the deployed page. Using a full URL from the current
+  // location keeps it working on GitHub Pages, Vercel, and phone browsers regardless of subpath.
+  const audioPath = new URL('./RHB(256k).mp3', window.location.href).toString();
   const birthdayAudio = new Audio(audioPath);
   birthdayAudio.preload = 'auto';
   birthdayAudio.loop = false;
