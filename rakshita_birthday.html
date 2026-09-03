@@ -743,6 +743,8 @@
 
   function pad(n){ return String(n).padStart(2,'0'); }
 
+  let timer;
+
   function tick(){
     const now = new Date();
     let diff = target - now;
@@ -762,7 +764,7 @@
     elSecs.textContent = pad(s);
   }
   tick();
-  const timer = setInterval(tick, 1000);
+  timer = setInterval(tick, 1000);
 
   // ---------- Birthday tune (Web Audio, no file needed) ----------
   // ---------- Birthday tune (use a local MP3 file) ----------
@@ -770,7 +772,8 @@
   // Use the provided MP3. Relative path from this file (BR/) to the Desktop file:
   // ../RHB(256k).mp3
   // Use the MP3 located in the same `BR` folder as this HTML file.
-  const audioPath = 'RHB(256k).mp3';
+  // Encode parentheses so the URL is reliable on GitHub Pages and other static hosts.
+  const audioPath = encodeURI('RHB(256k).mp3');
   const birthdayAudio = new Audio(audioPath);
   birthdayAudio.preload = 'auto';
   birthdayAudio.loop = false;
